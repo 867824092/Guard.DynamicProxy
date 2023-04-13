@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{1974942E-24E5-4670-9094-53FE61A75144}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{295B4DB5-FDE4-4AFE-9DF3-ECF3B78844BD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Guard.DynamicProxy.Core", "src\Guard.DynamicProxy.Core\Guard.DynamicProxy.Core.csproj", "{77BEE425-F2B7-4BEC-9CEC-34615FA4A05B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Guard.DynamicProxy.Abstracts", "src\Guard.DynamicProxy.Abstracts\Guard.DynamicProxy.Abstracts.csproj", "{E14AD1A7-C682-4B84-BE5C-04D595CAAD82}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Guard.DynamicProxy.Tests", "tests\Guard.DynamicProxy.Tests\Guard.DynamicProxy.Tests.csproj", "{3FDB7EB2-3B26-447B-9A71-412399332C26}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{77BEE425-F2B7-4BEC-9CEC-34615FA4A05B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{77BEE425-F2B7-4BEC-9CEC-34615FA4A05B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{77BEE425-F2B7-4BEC-9CEC-34615FA4A05B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{77BEE425-F2B7-4BEC-9CEC-34615FA4A05B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E14AD1A7-C682-4B84-BE5C-04D595CAAD82}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E14AD1A7-C682-4B84-BE5C-04D595CAAD82}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E14AD1A7-C682-4B84-BE5C-04D595CAAD82}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E14AD1A7-C682-4B84-BE5C-04D595CAAD82}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3FDB7EB2-3B26-447B-9A71-412399332C26}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3FDB7EB2-3B26-447B-9A71-412399332C26}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3FDB7EB2-3B26-447B-9A71-412399332C26}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3FDB7EB2-3B26-447B-9A71-412399332C26}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{77BEE425-F2B7-4BEC-9CEC-34615FA4A05B} = {1974942E-24E5-4670-9094-53FE61A75144}
+		{E14AD1A7-C682-4B84-BE5C-04D595CAAD82} = {1974942E-24E5-4670-9094-53FE61A75144}
+		{3FDB7EB2-3B26-447B-9A71-412399332C26} = {295B4DB5-FDE4-4AFE-9DF3-ECF3B78844BD}
+	EndGlobalSection
+EndGlobal
