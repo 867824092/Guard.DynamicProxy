@@ -8,7 +8,7 @@ namespace Guard.DynamicProxy.Tests {
         private IProxyGenerator ProxyGenerator { get; }
 
         public DynamicProxyTests() {
-            var builder = new DefaultProxyBuilder(new ModuleScope(), null);
+            var builder = new DefaultProxyBuilder(new ModuleScope());
             ProxyGenerator = new DefaultProxyGenerator(builder);
         }
     

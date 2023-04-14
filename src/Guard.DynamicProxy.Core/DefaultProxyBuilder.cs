@@ -9,11 +9,9 @@ using Guard.DynamicProxy.Core.Interal;
 namespace Guard.DynamicProxy.Core {
     public class DefaultProxyBuilder : IProxyBuilder {
         private readonly ModuleScope _moduleScope;
-        private readonly DiagnosticListener _listener;
-        
-        public DefaultProxyBuilder(ModuleScope moduleScope, DiagnosticListener listener) {
+
+        public DefaultProxyBuilder(ModuleScope moduleScope) {
             _moduleScope = moduleScope;
-            _listener = listener;
         }
 
         public Type CreateClassProxyType<T>() {
