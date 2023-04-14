@@ -27,13 +27,14 @@ namespace Guard.DynamicProxy.Core {
             _moduleBuilder = assemblyBuilder.DefineDynamicModule(DefaultModuleName);
             _cache = new ConcurrentDictionary<Type, Type>();
         }
-        
+
         public Type GetOrAdd(Type key, Func<Type, Type> valueFactory) {
+            //双检索判断
+            if (_cache.TryGetValue(key, out var value)) {
+                return value;
+            }
+
             try {
-                if (_cache.TryGetValue(key, out var value)) {
-                    return value;
-                }
-                //双检索判断
                 _semaphoreSlim.Wait();
                 if (_cache.TryGetValue(key, out value)) {
                     return value;
@@ -44,10 +45,13 @@ namespace Guard.DynamicProxy.Core {
                 return value;
             }
             finally {
-                _semaphoreSlim.Release();
+                if (_semaphoreSlim.CurrentCount == 0) {
+                    _semaphoreSlim.Release();
+                }
             }
+
         }
-        
+
         public TypeBuilder CreateTypeBuilder(string name, TypeAttributes attributes, Type baseType) {
             if (baseType != null && baseType.IsGenericTypeDefinition) {
                 throw new NotSupportedException("不支持开放的泛型基类型: " + baseType.FullName);
