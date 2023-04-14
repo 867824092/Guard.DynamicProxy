@@ -10,10 +10,6 @@ namespace Guard.DynamicProxy.Tests {
             invocation.Proceed();
             Debug.WriteLine("LogInterceptor post....");
         }
-
-        public Task InterceptAsync(IInvocation invocation) {
-            throw new System.NotImplementedException();
-        }
     }
     
 }

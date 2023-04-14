@@ -9,10 +9,5 @@ namespace Guard.DynamicProxy.Abstracts.Interfaces {
         /// Interception synchronization method
         /// </summary>
         void Intercept(IInvocation invocation);
-        
-        /// <summary>
-        /// Interception asynchronous method
-        /// </summary>
-        Task InterceptAsync(IInvocation invocation);
     }
 }
