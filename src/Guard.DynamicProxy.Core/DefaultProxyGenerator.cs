@@ -21,14 +21,15 @@ namespace Guard.DynamicProxy.Core {
 		public TClass CreateClassProxy<TClass>(object[] constructorArguments, params IInterceptor[] interceptors) where TClass : class {
 			return (TClass)CreateClassProxy(typeof(TClass), constructorArguments, interceptors);
 		}
-
-		public TInterface CreateInterfaceProxy<TInterface, TClass>(object[] constructorArguments, params IInterceptor[] interceptors) where TClass : class {
-			if(!typeof(TInterface).IsInterface)
-		       throw new ArgumentException("TInterface must be an interface");
-
-			return (TInterface)CreateClassProxy(typeof(TClass), constructorArguments, interceptors);
+        public TInterface CreateInterfaceProxy<TInterface, TClass>(params IInterceptor[] interceptors) where TClass : class {
+           return CreateInterfaceProxy<TInterface, TClass>(null, interceptors);
+        }
+        public TInterface CreateInterfaceProxy<TInterface, TClass>(object[] constructorArguments, params IInterceptor[] interceptors) where TClass : class {
+			return CreateInterfaceProxy<TInterface>(typeof(TClass), constructorArguments, interceptors);
 		}
-
+        public TInterface CreateInterfaceProxy<TInterface>(Type targetType, params IInterceptor[] interceptors) {
+            return CreateInterfaceProxy<TInterface>(targetType, null, interceptors);
+        }
         public TInterface CreateInterfaceProxy<TInterface>(Type targetType,object[] constructorArguments, params IInterceptor[] interceptors) {
             if (!typeof(TInterface).IsInterface)
                 throw new ArgumentException("TInterface must be an interface");
@@ -84,5 +85,7 @@ namespace Guard.DynamicProxy.Core {
 				throw new ArgumentException(message.ToString(), nameof(constructorArguments), ex);
 			}
 		}
+
+       
     }
 } 
