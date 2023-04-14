@@ -3,7 +3,7 @@ using System.Reflection;
 using Guard.DynamicProxy.Abstracts;
 using Guard.DynamicProxy.Abstracts.Interfaces;
 
-namespace Guard.DynamicProxy.Core.Interal {
+namespace Guard.DynamicProxy.Core {
     /// <summary>
     ///  组合模式调用
     /// </summary>

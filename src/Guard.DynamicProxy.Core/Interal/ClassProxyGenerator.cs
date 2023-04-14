@@ -8,23 +8,15 @@ namespace Guard.DynamicProxy.Core.Interal {
     /// <summary>
     /// 类代理生成器
     /// </summary>
-    internal class ClassProxyGenerator {
-        internal const TypeAttributes DefaultAttributes =
-            TypeAttributes.Public | TypeAttributes.Class | TypeAttributes.Serializable;
-        public TypeAttributes TypeAttributes { get; }
-        public Type TargetType { get; }
-        public ModuleScope ModuleScope { get; }
-
-        public ClassProxyGenerator(Type targetType, ModuleScope moduleScope,TypeAttributes typeAttributes = DefaultAttributes) {
-            TargetType = targetType ?? throw new ArgumentNullException(nameof(targetType));
-            ModuleScope = moduleScope ?? throw new ArgumentNullException(nameof(moduleScope));
-            TypeAttributes = typeAttributes;
+    internal class ClassProxyGenerator : AbstractProxyGenerator {
+        
+        public ClassProxyGenerator(Type targetType, ModuleScope moduleScope):base(targetType,moduleScope) {
         }
-        public Type GetProxyType() {
-            return ModuleScope.GetOrAdd(TargetType, GenerateProxyType);
+        public ClassProxyGenerator(Type targetType, ModuleScope moduleScope,TypeAttributes flags = DefaultAttributes)
+            :base(targetType,moduleScope,flags) {
         }
-        private Type GenerateProxyType(Type targetType) {
-            TypeBuilder typeBuilder =  ModuleScope.CreateTypeBuilder(targetType.Name,TypeAttributes,targetType,Type.EmptyTypes);
+        protected override Type GenerateProxyType(Type targetType) {
+            TypeBuilder typeBuilder =  ModuleScope.CreateTypeBuilder(targetType.Name,TypeAttributes,targetType);
             var emitter = new ClassEmitterBuilder(typeBuilder, targetType);
 
             emitter.AddPrivateFields(ClassEmitterBuilder.InterceptorsFieldName, typeof(IInterceptor[])) // 生成拦截器字段

@@ -48,21 +48,11 @@ namespace Guard.DynamicProxy.Core {
             }
         }
         
-        public TypeBuilder CreateTypeBuilder(string name, TypeAttributes attributes, Type baseType, Type[] interfaces) {
+        public TypeBuilder CreateTypeBuilder(string name, TypeAttributes attributes, Type baseType) {
             if (baseType != null && baseType.IsGenericTypeDefinition) {
                 throw new NotSupportedException("不支持开放的泛型基类型: " + baseType.FullName);
-            }
-            TypeBuilder typeBuilder = _moduleBuilder.DefineType(DefaultProxyTypeName + name, attributes,baseType);
-            for (int i = 0; i < interfaces.Length; i++) {
-                if (interfaces[i].IsGenericTypeDefinition) {
-                    throw new NotSupportedException("不支持开放的通用接口: " + interfaces[i].FullName);
-                }
-                if (interfaces[i].IsInterface)
-                {
-                    typeBuilder.AddInterfaceImplementation(interfaces[i]);
-                }
-            }
-            return typeBuilder;
+            }            
+            return _moduleBuilder.DefineType(DefaultProxyTypeName + name, attributes, baseType);
         }
     }
 }
