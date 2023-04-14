@@ -6,21 +6,35 @@ using Guard.DynamicProxy.Abstracts.Interfaces;
 using Guard.DynamicProxy.Core.Core;
 
 namespace Guard.DynamicProxy.Core {
-    
-    public class DefaultProxyGenerator : IProxyGenerator {
 
-        readonly IProxyBuilder _proxyBuilder;
-        public DefaultProxyGenerator(IProxyBuilder proxyBuilder) {
-            _proxyBuilder = proxyBuilder;
-        }
-        
-        public TClass CreateClassProxy<TClass>(params IInterceptor[] interceptors) where TClass : class {
-	        return (TClass)CreateClassProxy(typeof(TClass),null,interceptors);
-        }
-        
-        public TClass CreateClassProxy<TClass>(object[] constructorArguments, params IInterceptor[] interceptors) where TClass : class {
-	        return (TClass)CreateClassProxy(typeof(TClass),constructorArguments,interceptors);
+	public class DefaultProxyGenerator : IProxyGenerator {
+
+		readonly IProxyBuilder _proxyBuilder;
+		public DefaultProxyGenerator(IProxyBuilder proxyBuilder) {
+			_proxyBuilder = proxyBuilder;
 		}
+
+		public TClass CreateClassProxy<TClass>(params IInterceptor[] interceptors) where TClass : class {
+			return (TClass)CreateClassProxy(typeof(TClass), null, interceptors);
+		}
+
+		public TClass CreateClassProxy<TClass>(object[] constructorArguments, params IInterceptor[] interceptors) where TClass : class {
+			return (TClass)CreateClassProxy(typeof(TClass), constructorArguments, interceptors);
+		}
+
+		public TInterface CreateInterfaceProxy<TInterface, TClass>(object[] constructorArguments, params IInterceptor[] interceptors) where TClass : class {
+			if(!typeof(TInterface).IsInterface)
+		       throw new ArgumentException("TInterface must be an interface");
+
+			return (TInterface)CreateClassProxy(typeof(TClass), constructorArguments, interceptors);
+		}
+
+        public TInterface CreateInterfaceProxy<TInterface>(Type targetType,object[] constructorArguments, params IInterceptor[] interceptors) {
+            if (!typeof(TInterface).IsInterface)
+                throw new ArgumentException("TInterface must be an interface");
+            return (TInterface)CreateClassProxy(targetType, constructorArguments, interceptors);
+        }
+
 
         public object CreateClassProxy(Type targetType, params IInterceptor[] interceptors) {
 	        return CreateClassProxy(targetType, null, interceptors);
