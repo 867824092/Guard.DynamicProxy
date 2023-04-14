@@ -4,6 +4,11 @@
         <ImplicitUsings>disable</ImplicitUsings>
         <Nullable>disable</Nullable>
         <TargetFrameworks>net6.0;net7.0;netstandard2.0;net462;netstandard2.1</TargetFrameworks>
+        <Title>Guard.DynamicProxy.Abstracts</Title>
+        <Authors>撒尿牛丸</Authors>
+        <Description>A Lightweight Class Library for Generating Dynamic Proxy Objects Based on Emit</Description>
+        <RepositoryUrl>https://github.com/867824092/Guard.DynamicProxy.git</RepositoryUrl>
+        <Version>0.0.1-preview</Version>
     </PropertyGroup>
 
 </Project>
