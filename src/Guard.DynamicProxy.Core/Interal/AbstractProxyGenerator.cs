@@ -18,9 +18,6 @@ namespace Guard.DynamicProxy.Core.Interal {
         }
         
         public Type GetProxyType() {
-           return GetProxyTypeByCache();
-        }
-        protected virtual Type GetProxyTypeByCache() {
             return ModuleScope.GetOrAdd(TargetType, GenerateProxyType);
         }
         protected abstract Type GenerateProxyType(Type targetType);
