@@ -18,7 +18,6 @@ namespace Guard.DynamicProxy.Core.Core {
                 Type[] parameterTypes = new Type[ctorParams.Length + 2];
                 parameterTypes[0] = typeof(IInterceptor[]);
                 parameterTypes[1] = typeof(Type);
-                //TODO 此处有问题
                 for (int j = 0; j < ctorParams.Length; j++) {
                     parameterTypes[j + 2] = ctorParams[j].ParameterType;
                 }
