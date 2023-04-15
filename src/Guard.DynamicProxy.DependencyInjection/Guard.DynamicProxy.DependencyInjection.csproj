@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <ImplicitUsings>disable</ImplicitUsings>
+        <Nullable>disable</Nullable>
+        <TargetFrameworks>net6.0;netstandard2.0;netstandard2.1;net462</TargetFrameworks>
+        <Version>0.0.1-preview</Version>
+        <Title>Guard.DynamicProxy.DependencyInjection</Title>
+        <Authors>撒尿牛丸</Authors>
+        <Description>A Lightweight Class Library for Generating Dynamic Proxy Objects Based on Emit</Description>
+        <RepositoryUrl>https://github.com/867824092/Guard.DynamicProxy.git</RepositoryUrl>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="7.0.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Guard.DynamicProxy.Core\Guard.DynamicProxy.Core.csproj" />
+    </ItemGroup>
+
+</Project>
