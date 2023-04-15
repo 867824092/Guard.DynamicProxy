@@ -16,11 +16,11 @@ namespace Guard.DynamicProxy.Core.Interal {
             :base(targetType,moduleScope,flags) {
         }
         protected override Type GenerateProxyType(Type targetType) {
-            TypeBuilder typeBuilder =  ModuleScope.CreateTypeBuilder(targetType.Name,TypeAttributes,targetType);
+            TypeBuilder typeBuilder = CreateTypeBuilder(targetType.Name);
             var emitter = new ClassEmitterBuilder(typeBuilder, targetType);
 
-            emitter.AddPrivateFields(ClassEmitterBuilder.InterceptorsFieldName, typeof(IInterceptor[])) // 生成拦截器字段
-                .AddPrivateFields(ClassEmitterBuilder.TargetTypeFieldName, typeof(Type)) // 生成targetType字段
+            emitter.AddPrivateFields(AbstractEmitterBuilder.InterceptorsFieldName, typeof(IInterceptor[])) // 生成拦截器字段
+                .AddPrivateFields(AbstractEmitterBuilder.TargetTypeFieldName, typeof(Type)) // 生成targetType字段
                 .AddConstructors()
                 .AddMethods();
 

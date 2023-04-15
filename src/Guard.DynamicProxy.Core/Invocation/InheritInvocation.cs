@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Reflection;
-using Guard.DynamicProxy.Abstracts;
 using Guard.DynamicProxy.Abstracts.Interfaces;
 
-namespace Guard.DynamicProxy.Core {
+namespace Guard.DynamicProxy.Core.Invocation {
     /// <summary>
-    ///  组合模式调用
+    ///  继承模式调用
     /// </summary>
-    public class CompositionInvocation : AbstractInvocation  {
-        public CompositionInvocation(object[] arguments, 
+    public class InheritInvocation : AbstractInvocation  {
+        public InheritInvocation(object[] arguments, 
             object proxy, 
             Type targetType,
             IInterceptor[] interceptors, 

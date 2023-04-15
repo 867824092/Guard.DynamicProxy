@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Reflection;
-using Guard.DynamicProxy.Abstracts;
 using Guard.DynamicProxy.Abstracts.Interfaces;
 
-namespace Guard.DynamicProxy.Core {
+namespace Guard.DynamicProxy.Core.Invocation {
     public abstract class AbstractInvocation : IInvocation {
         private int _interceptorIndex = -1;
         public object[] Arguments { get; }

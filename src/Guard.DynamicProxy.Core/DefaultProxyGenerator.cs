@@ -14,6 +14,8 @@ namespace Guard.DynamicProxy.Core {
 			_proxyBuilder = proxyBuilder;
 		}
 
+		#region WithOutTarget
+
 		public TClass CreateClassProxy<TClass>(params IInterceptor[] interceptors) where TClass : class {
 			return (TClass)CreateClassProxy(typeof(TClass), null, interceptors);
 		}
@@ -56,6 +58,20 @@ namespace Guard.DynamicProxy.Core {
 			return CreateClassProxyInstance(proxyType, arguments, targetType, constructorArguments);
 		}
 
+
+		#endregion
+		
+		#region WithTarget
+		public object CreateClassProxy(Type targetType, object target, params IInterceptor[] interceptors) {
+			targetType.CheckIsClass(nameof(targetType));
+			targetType.CheckNotGenericType(nameof(targetType));
+            
+			var proxyType = _proxyBuilder.CreateClassProxyType(targetType,target);
+			var arguments = new object[] { interceptors, targetType, target };
+			return CreateClassProxyInstance(proxyType, arguments, targetType, null);
+		}
+		#endregion
+		
 		protected object CreateClassProxyInstance(Type proxyType, object[] proxyArguments, Type targetType,
 		                                          object[] constructorArguments)
 		{

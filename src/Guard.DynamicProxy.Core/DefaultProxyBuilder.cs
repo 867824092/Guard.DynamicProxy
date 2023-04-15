@@ -17,12 +17,24 @@ namespace Guard.DynamicProxy.Core {
         public Type CreateClassProxyType<T>() {
             return CreateClassProxyType(typeof(T));
         }
-
+        
         public Type CreateClassProxyType(Type targetType) {
             var generator = new ClassProxyGenerator(targetType,_moduleScope);
             return generator.GetProxyType();
         }
+        
+        public Type CreateClassProxyType<T>(T target) {
+            return CreateClassProxyType(typeof(T),target);
+        }
 
+        public Type CreateClassProxyType(Type targetType, object target) {
+            if (targetType != target.GetType()) {
+                throw new ArgumentException("targetType must be equal to target.GetType()");
+            }
+
+            var generator = new ClassProxyGeneratorWithTarget(targetType, target, _moduleScope);
+            return generator.GetProxyType();
+        }
     }
 }
 

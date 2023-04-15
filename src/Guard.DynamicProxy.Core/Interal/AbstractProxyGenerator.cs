@@ -1,5 +1,6 @@
 using System;
 using System.Reflection;
+using System.Reflection.Emit;
 
 namespace Guard.DynamicProxy.Core.Interal {
     public abstract class AbstractProxyGenerator {
@@ -19,6 +20,9 @@ namespace Guard.DynamicProxy.Core.Interal {
         
         public Type GetProxyType() {
             return ModuleScope.GetOrAdd(TargetType, GenerateProxyType);
+        }
+        protected TypeBuilder CreateTypeBuilder(string typeName) {
+            return ModuleScope.CreateTypeBuilder(typeName, TypeAttributes, TargetType);
         }
         protected abstract Type GenerateProxyType(Type targetType);
     }
