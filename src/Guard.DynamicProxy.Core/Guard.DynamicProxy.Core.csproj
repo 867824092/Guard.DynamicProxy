@@ -6,9 +6,10 @@
         <TargetFrameworks>net6.0;net462;netstandard2.0;netstandard2.1</TargetFrameworks>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <Title>Guard.DynamicProxy.Core</Title>
-        <Authors>撒尿牛丸</Authors>
+        <Authors>Juicy beef ball</Authors>
         <Description>A Lightweight Class Library for Generating Dynamic Proxy Objects Based on Emit</Description>
         <RepositoryUrl>https://github.com/867824092/Guard.DynamicProxy.git</RepositoryUrl>
+        <PackageId>DynamicProxy.Core</PackageId>
     </PropertyGroup>
     <ItemGroup>
       <ProjectReference Include="..\Guard.DynamicProxy.Abstracts\Guard.DynamicProxy.Abstracts.csproj" />
