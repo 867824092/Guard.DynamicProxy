@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
@@ -38,11 +39,12 @@ namespace Guard.DynamicProxy.Core.Core {
                 il.Emit(OpCodes.Ldarg_0);
                 il.Emit(OpCodes.Ldarg_2);
                 il.Emit(OpCodes.Stfld, FieldBuilders[TargetTypeFieldName]);
-                il.Emit(OpCodes.Ret);
                 // 赋值target
                 il.Emit(OpCodes.Ldarg_0);
                 il.Emit(OpCodes.Ldarg_3);
+                //il.Emit(OpCodes.Ldstr,"1234");
                 il.Emit(OpCodes.Stfld, FieldBuilders[TargetFieldName]);
+               
                 il.Emit(OpCodes.Ret);
         }
         protected override LocalBuilder CreateProxyInvocation(ILGenerator ilGenerator, LocalBuilder conArgumentsArray,

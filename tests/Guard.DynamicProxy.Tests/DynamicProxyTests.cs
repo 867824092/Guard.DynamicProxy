@@ -20,7 +20,6 @@ namespace Guard.DynamicProxy.Tests {
         }
         [Fact]
         public void Should_True_Create_Proxy_With_Target() {
-            //TODO target为null
             var calculator = (Calculate)ProxyGenerator.CreateClassProxy(typeof(Calculate),new Calculate(), new LogInterceptor());
             Assert.True(calculator != null); 
             Assert.True( calculator.Add(1,6) == 7);

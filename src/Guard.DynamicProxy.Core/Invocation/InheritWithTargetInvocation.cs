@@ -21,9 +21,9 @@ namespace Guard.DynamicProxy.Core.Invocation {
             Target = target;
         }
         protected override void InvocationWithTarget() {
-            ReturnValue = !MethodInvocationTarget.IsGenericMethod 
-                ? MethodInvocationTarget.Invoke(Target, Arguments) 
-                : MethodInvocationTarget.MakeGenericMethod(GenericTypeArguments).Invoke(Target, Arguments);
+            ReturnValue = !Method.IsGenericMethod 
+                ? Method.Invoke(Target, Arguments) 
+                : Method.MakeGenericMethod(GenericTypeArguments).Invoke(Target, Arguments);
         }
     }
 }
