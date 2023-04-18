@@ -43,3 +43,5 @@ TODO
 
 - [ ] Dependency Injection
 - [ ] Code optimization
+
+**PS: This project draws on some of the code design from [castle. dynamic](https://github.com/castleproject/Core.git). We hope everyone can point out more issues that need improvement, learn together, and improve together.**
