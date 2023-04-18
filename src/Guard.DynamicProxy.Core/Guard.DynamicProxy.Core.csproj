@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <PackageVersion>0.0.2-preview</PackageVersion>
+        <PackageVersion>0.0.3-preview</PackageVersion>
         <ImplicitUsings>disable</ImplicitUsings>
         <Nullable>disable</Nullable>
         <TargetFrameworks>net6.0;net462;netstandard2.0;netstandard2.1</TargetFrameworks>
@@ -10,6 +10,7 @@
         <Description>A Lightweight Class Library for Generating Dynamic Proxy Objects Based on Emit</Description>
         <RepositoryUrl>https://github.com/867824092/Guard.DynamicProxy.git</RepositoryUrl>
         <PackageId>DynamicProxy.Core</PackageId>
+        <PackageOutputPath>..</PackageOutputPath>
     </PropertyGroup>
     <ItemGroup>
       <ProjectReference Include="..\Guard.DynamicProxy.Abstracts\Guard.DynamicProxy.Abstracts.csproj" />
