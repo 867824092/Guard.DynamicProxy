@@ -80,7 +80,32 @@ namespace Guard.DynamicProxy.Abstracts.Interfaces {
         #endregion
 
         #region WithTarget
-        object CreateClassProxy(Type targetType, object target, params IInterceptor[] interceptors);
+
+        /// <summary>
+        /// 根据目标对象创建代理类
+        /// </summary>
+        TClass CreateClassProxyWithTarget<TClass>(TClass target, params IInterceptor[] interceptors)
+            where TClass : class;
+        /// <summary>
+        /// 根据目标对象创建代理类
+        /// </summary>
+        TInterface CreateInterfaceProxyWithTarget<TInterface, TClass>(TClass target,
+            params IInterceptor[] interceptors) where TClass : class;
+        /// <summary>
+        /// 根据目标对象创建代理类
+        /// </summary>
+        TInterface CreateInterfaceProxyWithTarget<TInterface>(Type targetType, object target,
+            params IInterceptor[] interceptors);
+        /// <summary>
+        /// 根据目标对象创建代理类
+        /// </summary>
+        object CreateInterfaceProxyWithTarget(Type interfaceType, Type targetType, object target,
+            params IInterceptor[] interceptors);
+        /// <summary>
+        /// 根据目标对象创建代理类
+        /// </summary>
+        object CreateClassProxyWithTarget(Type targetType, object target, params IInterceptor[] interceptors);
+
         #endregion
     }
 }

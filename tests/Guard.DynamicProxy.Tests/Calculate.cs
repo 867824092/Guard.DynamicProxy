@@ -1,8 +1,14 @@
-﻿namespace Guard.DynamicProxy.Tests {
+﻿using Guard.DynamicProxy.Abstracts.Attributes;
+
+namespace Guard.DynamicProxy.Tests {
     public class Calculate : ICalculate {
         [MethodLogInterceptor]
         public virtual int Add(int a, int b) {
             return a + b;
+        }
+        [Ignore]
+        public  int Multiply(int a, int b) {
+            return a * b;
         }
     }
     

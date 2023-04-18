@@ -62,7 +62,27 @@ namespace Guard.DynamicProxy.Core {
 		#endregion
 		
 		#region WithTarget
-		public object CreateClassProxy(Type targetType, object target, params IInterceptor[] interceptors) {
+	
+		public TClass CreateClassProxyWithTarget<TClass>(TClass target,params IInterceptor[] interceptors) where TClass : class {
+			return (TClass)CreateClassProxyWithTarget(typeof(TClass), target, interceptors);
+		}
+		public TInterface CreateInterfaceProxyWithTarget<TInterface, TClass>(TClass target, params IInterceptor[] interceptors) where TClass : class {
+			return CreateInterfaceProxyWithTarget<TInterface>(typeof(TClass), target, interceptors);
+		}
+        public TInterface CreateInterfaceProxyWithTarget<TInterface>(Type targetType,object target, params IInterceptor[] interceptors) {
+            if (!typeof(TInterface).IsInterface)
+                throw new ArgumentException("TInterface must be an interface");
+            return (TInterface)CreateClassProxyWithTarget(targetType, target, interceptors);
+        }
+        public object CreateInterfaceProxyWithTarget(Type interfaceType,Type targetType,object target, params IInterceptor[] interceptors) {
+	        if (!interfaceType.IsInterface)
+		        throw new ArgumentException("interfaceType must be an interface");
+	        if(!interfaceType.IsAssignableFrom(targetType))
+		        throw new ArgumentException("targetType must inherit interfaceType");
+	        return CreateClassProxyWithTarget(targetType, target, interceptors);
+        }
+
+        public object CreateClassProxyWithTarget(Type targetType, object target, params IInterceptor[] interceptors) {
 			targetType.CheckIsClass(nameof(targetType));
 			targetType.CheckNotGenericType(nameof(targetType));
             
