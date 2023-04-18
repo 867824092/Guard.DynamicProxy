@@ -1,5 +1,6 @@
 ﻿namespace Guard.DynamicProxy.Tests {
     public class Calculate : ICalculate {
+        [MethodLogInterceptor]
         public virtual int Add(int a, int b) {
             return a + b;
         }

@@ -2,6 +2,7 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
 using System.Threading;
@@ -56,7 +57,15 @@ namespace Guard.DynamicProxy.Core {
             if (baseType != null && baseType.IsGenericTypeDefinition) {
                 throw new NotSupportedException("不支持开放的泛型基类型: " + baseType.FullName);
             }            
-            return _moduleBuilder.DefineType(DefaultProxyTypeName + name, attributes, baseType);
+            TypeBuilder typeBuilder = _moduleBuilder.DefineType(DefaultProxyTypeName + name, attributes, baseType);
+            foreach (CustomAttributeData attribute in baseType.CustomAttributes) {
+                CustomAttributeBuilder attributeBuilder = new CustomAttributeBuilder(
+                    attribute.Constructor,
+                    attribute.ConstructorArguments.Select(arg => arg.Value).ToArray());
+                typeBuilder.SetCustomAttribute(attributeBuilder);
+            }
+
+            return typeBuilder;
         }
     }
 }

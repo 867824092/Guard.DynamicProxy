@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
+using Guard.DynamicProxy.Abstracts.Attributes;
 using Guard.DynamicProxy.Abstracts.Interfaces;
 
 namespace Guard.DynamicProxy.Core.Core{
@@ -32,14 +34,16 @@ namespace Guard.DynamicProxy.Core.Core{
         }
 
         public AbstractEmitterBuilder AddConstructors(bool isInherit = true) {
-            //查找目标类型的所有公共构造函数，如果没有则报错
-            if (TargetType.GetConstructors().Length == 0) {
-                throw new Exception("目标类型没有公共构造函数");
-            }
-
             if (isInherit) {
-                ConstructorInfos.AddRange(TargetType.GetConstructors());
-            }else {
+                var ctors = TargetType.GetConstructors(BindingFlags.Public | BindingFlags.Instance |
+                                                       BindingFlags.DeclaredOnly);
+                //查找目标类型的所有公共构造函数，如果没有则报错
+                if (ctors.Length == 0) {
+                    throw new Exception("目标类型没有公共构造函数");
+                }
+
+                ConstructorInfos.AddRange(ctors);
+            } else {
                 // 重新获取构造函数，不包含继承的构造函数
                 ConstructorInfos.Add(typeof(object).GetConstructor(Type.EmptyTypes));
             }
@@ -52,7 +56,14 @@ namespace Guard.DynamicProxy.Core.Core{
             if (methodInfos.Length == 0) return this;
             //TODO 需要新增对特殊方法的去除
             foreach (var methodInfo in methodInfos) {
-                if (methodInfo.IsPublic && methodInfo.IsVirtual) {
+                // 如果方法上有IgnoreAttribute特性，则不代理
+                if (methodInfo.CustomAttributes.Any(u => u.AttributeType == typeof(IgnoreAttribute))) {
+                    continue;
+                }
+                // 如果方法上有InterceptorAttribute特性或者方法是虚方法且公共的对方法进行拦截
+                // 如果方法中有InterceptorAttribute特性，使用方法+类中的拦截器
+                // 如果没有InterceptorAttribute特性，仅使用类中的拦截器
+                if ((methodInfo.IsPublic && methodInfo.IsVirtual) || methodInfo.CustomAttributes.Any(u => u.AttributeType == typeof(InterceptorAttribute))) {
                     MethodInfos.Add(methodInfo);
                 }
             }
@@ -69,14 +80,11 @@ namespace Guard.DynamicProxy.Core.Core{
                 for (int i = 0; i < genericArguments.Length; i++) {
                     argumentNames[i] = genericArguments[i].Name;
                 }
-
                 ParameterInfo[] parameters = method.GetParameters();
                 Type[] parameterTypes = new Type[parameters.Length];
                 for (int i = 0; i < parameters.Length; i++) {
                     parameterTypes[i] = parameters[i].ParameterType;
                 }
-
-                //TODO 此处如果是调用了目标对象生成，则直接调用目标对象的方法，不需要新增方法
                 //新增方法 xxxx_原始方法，用于调用父类的方法
                 var targetMethod = TypeBuilder.DefineMethod(TypeBuilder.Name + "_" + method.Name,
                     MethodAttributes.Public | MethodAttributes.HideBySig,
@@ -86,7 +94,6 @@ namespace Guard.DynamicProxy.Core.Core{
                     //声明泛型参数
                     targetMethod.DefineGenericParameters(argumentNames);
                 }
-
                 //调用父类方法
                 ILGenerator il = targetMethod.GetILGenerator();
                 il.Emit(OpCodes.Ldarg_0);
@@ -101,6 +108,14 @@ namespace Guard.DynamicProxy.Core.Core{
                     MethodAttributes.Public | MethodAttributes.Virtual,
                     method.ReturnType,
                     parameterTypes);
+                //将原始方法上的特性添加到新方法上
+                foreach (var attribute in method.CustomAttributes) {
+                    CustomAttributeBuilder attributeBuilder = new CustomAttributeBuilder(
+                        attribute.Constructor,
+                        attribute.ConstructorArguments.Select(arg => arg.Value).ToArray());
+                    methodBuilder.SetCustomAttribute(attributeBuilder);
+                }
+                
                 //定义泛型参数
                 il = methodBuilder.GetILGenerator();
                 //泛型参数类型数组

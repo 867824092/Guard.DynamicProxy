@@ -42,9 +42,7 @@ namespace Guard.DynamicProxy.Core.Core {
                 // 赋值target
                 il.Emit(OpCodes.Ldarg_0);
                 il.Emit(OpCodes.Ldarg_3);
-                //il.Emit(OpCodes.Ldstr,"1234");
                 il.Emit(OpCodes.Stfld, FieldBuilders[TargetFieldName]);
-               
                 il.Emit(OpCodes.Ret);
         }
         protected override LocalBuilder CreateProxyInvocation(ILGenerator ilGenerator, LocalBuilder conArgumentsArray,

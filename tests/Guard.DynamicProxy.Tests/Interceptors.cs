@@ -11,5 +11,13 @@ namespace Guard.DynamicProxy.Tests {
             Debug.WriteLine("LogInterceptor post....");
         }
     }
+
+    public class MethodLogInterceptorAttribute : Abstracts.Attributes.InterceptorAttribute {
+        public override void Intercept(IInvocation invocation) {
+            Debug.WriteLine("MethodLogInterceptor pre....");
+            invocation.Proceed();
+            Debug.WriteLine("MethodLogInterceptor post....");
+        }
+    }
     
 }
