@@ -54,7 +54,6 @@ namespace Guard.DynamicProxy.Core.Core{
             var methodInfos =
                 TargetType.GetMethods(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly);
             if (methodInfos.Length == 0) return this;
-            //TODO 需要新增对特殊方法的去除
             foreach (var methodInfo in methodInfos) {
                 // 如果方法上有IgnoreAttribute特性，则不代理
                 if (methodInfo.CustomAttributes.Any(u => u.AttributeType == typeof(IgnoreAttribute))) {
