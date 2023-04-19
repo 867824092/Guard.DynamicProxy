@@ -62,7 +62,7 @@ namespace Guard.DynamicProxy.Core.Core{
                 // 如果方法上有InterceptorAttribute特性或者方法是虚方法且公共的对方法进行拦截
                 // 如果方法中有InterceptorAttribute特性，使用方法+类中的拦截器
                 // 如果没有InterceptorAttribute特性，仅使用类中的拦截器
-                if ((methodInfo.IsPublic && methodInfo.IsVirtual) || methodInfo.CustomAttributes.Any(u => u.AttributeType == typeof(InterceptorAttribute))) {
+                if ((methodInfo.IsPublic && methodInfo.IsVirtual && !methodInfo.IsFinal) || methodInfo.CustomAttributes.Any(u => u.AttributeType == typeof(InterceptorAttribute))) {
                     MethodInfos.Add(methodInfo);
                 }
             }
