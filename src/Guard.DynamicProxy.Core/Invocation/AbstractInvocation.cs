@@ -43,23 +43,23 @@ namespace Guard.DynamicProxy.Core.Invocation {
         protected abstract void InvocationWithTarget();
 
         public void Proceed() {
-            if (_interceptorIndex == -1) {
-                //如果方法有标明拦截器特性，则将拦截器添加到拦截器列表中
-                if (Method != null) {
-                    var methodInterceptors =
-                        Method.CustomAttributes.Where(u=>u.AttributeType.IsSubclassOf(typeof(InterceptorAttribute))).ToArray();
-                    if (methodInterceptors != null && methodInterceptors.Length > 0) {
-                        var interceptorList = new IInterceptor[Interceptors.Length + methodInterceptors.Length];
-                        Interceptors.CopyTo(interceptorList, 0);
-                        for (int i = 0; i < methodInterceptors.Length; i++) {
-                            object[] objs = methodInterceptors[i].ConstructorArguments.Select(u => u.Value).ToArray();
-                            var interceptor = (IInterceptor)Activator.CreateInstance(methodInterceptors[i].AttributeType,objs);
-                            interceptorList[Interceptors.Length + i] = interceptor;
-                        }
-                        Interceptors = interceptorList;
-                    }
-                }
-            }
+            // if (_interceptorIndex == -1) {
+            //     //如果方法有标明拦截器特性，则将拦截器添加到拦截器列表中
+            //     if (Method != null) {
+            //         var methodInterceptors =
+            //             Method.CustomAttributes.Where(u=>u.AttributeType.IsSubclassOf(typeof(InterceptorAttribute))).ToArray();
+            //         if (methodInterceptors != null && methodInterceptors.Length > 0) {
+            //             var interceptorList = new IInterceptor[Interceptors.Length + methodInterceptors.Length];
+            //             Interceptors.CopyTo(interceptorList, 0);
+            //             for (int i = 0; i < methodInterceptors.Length; i++) {
+            //                 object[] objs = methodInterceptors[i].ConstructorArguments.Select(u => u.Value).ToArray();
+            //                 var interceptor = (IInterceptor)Activator.CreateInstance(methodInterceptors[i].AttributeType,objs);
+            //                 interceptorList[Interceptors.Length + i] = interceptor;
+            //             }
+            //             Interceptors = interceptorList;
+            //         }
+            //     }
+            // }
 
             if (Interceptors == null || Interceptors.Length == 0) {
                 InvocationWithTarget();
