@@ -8,19 +8,24 @@ jobs:
     name: build, pack & publish
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+    - uses: actions/checkout@v2
 
-      - name: Setup dotnet
-        uses: actions/setup-dotnet@v1
-        with:
-          dotnet-version: '6.0.x'
+    - name: Setup dotnet
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: '6.0.x'
           
-      - name: build
-        run: ./build.ps1
-        shell: pwsh
-      - name: publish nuget
-        run: ./publish.nuget.ps1
-        env:
-          NUGET_URL: https://api.nuget.org/v3/index.json
-          NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}        
-        shell: pwsh
+    - name: build
+      run: ./build.ps1
+      shell: pwsh
+    - name: publish nuget
+      env:
+        NUGET_URL: https://api.nuget.org/v3/index.json
+        NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }} 
+      run: ./publish.nuget.ps1
+      shell: pwsh
+    - name: Artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: artifacts
+        path: artifacts/**/*
