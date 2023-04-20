@@ -22,7 +22,18 @@ function Exec
     }
 }
 
+$artifacts = ".\artifacts"
+
+if(Test-Path $artifacts) { Remove-Item $artifacts -Force -Recurse }
+
 exec { & dotnet clean -c Release }
 
 exec { & dotnet build -c Release }
 
+exec { & dotnet test -c Release --no-build -l trx --verbosity=normal }
+
+exec { & dotnet pack .\src\Guard.DynamicProxy.Abstracts\Guard.DynamicProxy.Abstracts.csproj -c Release -o $artifacts --no-build }
+
+exec { & dotnet pack .\src\Guard.DynamicProxy.Core\Guard.DynamicProxy.Core.csproj -c Release -o $artifacts --no-build }
+
+exec { & dotnet pack .\src\Guard.DynamicProxy.DependencyInjection\Guard.DynamicProxy.DependencyInjection.csproj -c Release -o $artifacts --no-build }
