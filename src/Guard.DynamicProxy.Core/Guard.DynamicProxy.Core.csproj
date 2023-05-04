@@ -1,9 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <PackageVersion>1.0.0</PackageVersion>
+        <PackageVersion>1.0.1</PackageVersion>
         <ImplicitUsings>disable</ImplicitUsings>
         <Nullable>disable</Nullable>
-        <TargetFrameworks>net6.0;net462;netstandard2.0;netstandard2.1</TargetFrameworks>
+        <TargetFrameworks>net6.0;netstandard2.0;netstandard2.1;net462;net7.0;net8.0</TargetFrameworks>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <Title>Guard.DynamicProxy.Core</Title>
         <Authors>Juicy beef ball</Authors>
@@ -11,6 +11,7 @@
         <RepositoryUrl>https://github.com/867824092/Guard.DynamicProxy.git</RepositoryUrl>
         <PackageId>DynamicProxy.Core</PackageId>
         <PackageOutputPath>..</PackageOutputPath>
+        <PackageReleaseNotes>1、Upgrade support for net8.0</PackageReleaseNotes>
     </PropertyGroup>
     <ItemGroup>
       <ProjectReference Include="..\Guard.DynamicProxy.Abstracts\Guard.DynamicProxy.Abstracts.csproj" />
